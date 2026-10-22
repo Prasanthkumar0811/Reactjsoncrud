@@ -7,6 +7,7 @@ function UserTable(){
  const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const navigate=useNavigate()
 
@@ -80,6 +81,7 @@ function UserTable(){
                     <td>{u.address}</td>
                     <td>{u.state}</td>
                     <td>
+                        <button onClick={()=>setSelectedUser(u)}>View</button>
                         <button onClick={()=>navigate(`/edit/${u.id}`)}>Edit</button>
                         <button onClick={()=>handleDelete(u.id)}>Delete</button>
                     </td>
@@ -89,6 +91,24 @@ function UserTable(){
         </tbody>
 
        </table>
+       {selectedUser && (
+  <div className="modal-overlay">
+    <div className="modal">
+      <h2>Employee Details</h2>
+
+      <p><strong>ID:</strong> {selectedUser.id}</p>
+      <p><strong>Name:</strong> {selectedUser.name}</p>
+      <p><strong>Email:</strong> {selectedUser.email}</p>
+      <p><strong>Age:</strong> {selectedUser.age}</p>
+      <p><strong>Address:</strong> {selectedUser.address}</p>
+      <p><strong>State:</strong> {selectedUser.state}</p>
+
+      <button onClick={() => setSelectedUser(null)}>
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
     </>
    )
 }
